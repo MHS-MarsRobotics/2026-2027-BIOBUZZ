@@ -1,0 +1,14 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal() // It's good practice to include this too
+    }
+}
+
+include ':FtcRobotController'
+include ':Olympian'
+include ':Titans'
+include ':TitanMeepMeep'
+include ':OlympianMeepMeep'
+include ':TeamCode'
