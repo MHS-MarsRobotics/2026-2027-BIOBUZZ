@@ -20,7 +20,7 @@ public class FieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        DcMotor arm = hardwareMap.dcMotor.get("arm");
+
 
 
 
@@ -78,15 +78,6 @@ public class FieldCentricDrive extends LinearOpMode {
             Motor_Back_Left.setPower(backLeftPower);
             Motor_Back_Right.setPower(backRightPower);
 
-            if (gamepad2.a){
-                arm.setPower(-0.75);
-            }
-            else if (gamepad2.x){
-                arm.setPower(0.75);
-            }
-            else {
-                arm.setPower(0);
-            }
             if (gamepad1.right_trigger >0) {
                 Motor_Front_Left.setPower(frontLeftPower / 2);
                 Motor_Front_Right.setPower(frontRightPower / 2);

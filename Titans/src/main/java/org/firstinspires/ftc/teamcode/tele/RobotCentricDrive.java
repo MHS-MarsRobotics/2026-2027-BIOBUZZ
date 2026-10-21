@@ -5,13 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @TeleOp(name="Robot Drive")
 public class RobotCentricDrive extends LinearOpMode {
+    private static final double TICKS_PER_REV = 28.0;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -19,9 +22,12 @@ public class RobotCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        CRServo Cylinder = hardwareMap.crservo.get("Cylinder");
 
+        DcMotorEx intake = hardwareMap.get(DcMotorEx.class, "intake");
+        DcMotorEx fly = hardwareMap.get(DcMotorEx.class, "fly");
 
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fly.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
 
@@ -76,14 +82,45 @@ public class RobotCentricDrive extends LinearOpMode {
             Motor_Back_Left.setPower(backLeftPower);
             Motor_Back_Right.setPower(backRightPower);
 
+            if (gamepad2.y) {
+                fly.setPower(-0.55);
+            } else if (gamepad2.x) {
+                fly.setPower(0);
+            }
 
-            if (gamepad2.a){
-                Cylinder.setDirection(DcMotorSimple.Direction.FORWARD);
-                Cylinder.setPower(1);
+            // Button Controls for Intake
+            if (gamepad2.a) {
+                intake.setPower(-1.0);
+            } else if (gamepad2.b) {
+                intake.setPower(0);
             }
-            if (gamepad2.b){
-                Cylinder.setPower(0);
+
+            double flyTicksPerSec = fly.getVelocity();
+            double flyRpm = (flyTicksPerSec / TICKS_PER_REV) * 60.0;
+            double flyCurrentAmps = fly.getCurrent(CurrentUnit.AMPS);
+
+            telemetry.addLine("=== FLYWHEEL TELEMETRY ===");
+            telemetry.addData("Fly Power", "%.2f", fly.getPower());
+            telemetry.addData("Fly Position (Ticks)", fly.getCurrentPosition());
+            telemetry.addData("Fly Speed (Ticks/Sec)", "%.1f", flyTicksPerSec);
+            telemetry.addData("Fly Speed (RPM)", "%.1f RPM", flyRpm);
+            telemetry.addData("Fly Current Draw", "%.2f Amps", flyCurrentAmps);
+
+            // Intake Telemetry
+            double intakeCurrentAmps = intake.getCurrent(CurrentUnit.AMPS);
+
+            telemetry.addLine("\n=== INTAKE TELEMETRY ===");
+            telemetry.addData("Intake Power", "%.2f", intake.getPower());
+            telemetry.addData("Intake Position (Ticks)", intake.getCurrentPosition());
+            telemetry.addData("Intake Current Draw", "%.2f Amps", intakeCurrentAmps);
+
+            // Jam Detection Alert (If current > 4 Amps)
+            if (intakeCurrentAmps > 4.0) {
+                telemetry.addData("INTAKE ALERT", "JAM DETECTED (> 4A)!");
             }
+
+            telemetry.update();
+
         }
     }
 

@@ -8,90 +8,68 @@ import com.acmerobotics.roadrunner.Vector2d;
 // Imports for FTC SDK
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 // Import your own MecanumDrive class
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.PinpointLocalizer;
 
 @TeleOp(name = "new odo comp Field Drive ")
 public class FieldCentricDrivePinpoint extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Initialize the MecanumDrive class, which handles all hardware setup
+        // Initialize the MecanumDrive class, which handles hardware setup and PinpointLocalizer
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
-        DcMotor arm = hardwareMap.dcMotor.get("arm");
-        Servo intake_0 = hardwareMap.servo.get("intake_0");
-        Servo intake_1 = hardwareMap.servo.get("intake_1");
-
-
-        // Wait for the start button to be pressed
-
 
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
-
-            double speedMultiplier = 1.0;
-
-            if (gamepad1.right_trigger >0) {
-                speedMultiplier = 0.5;
-            }
-            if (gamepad1.right_bumper) {
-                speedMultiplier = 0.25;
-            }
-
+            // CRITICAL: Update the localizer's position estimate from the Pinpoint computer in every loop
             drive.updatePoseEstimate();
 
+            Pose2d currentPose = drive.localizer.getPose();
+            double botHeading = currentPose.heading.toDouble();
+
+            // Reset heading on options button press
+            if (gamepad1.options) {
+                if (drive.localizer instanceof PinpointLocalizer) {
+                    ((PinpointLocalizer) drive.localizer).driver.resetPosAndIMU();
+                }
+                drive.localizer.setPose(new Pose2d(currentPose.position, 0));
+            }
+
+            double speedMultiplier;
+            if (gamepad1.right_bumper) {
+                speedMultiplier = 0.25;
+            } else if (gamepad1.right_trigger > 0) {
+                speedMultiplier = 0.5;
+            } else {
+                speedMultiplier = 1.0;
+            }
+
+            // Driver joystick inputs
+            double y = -gamepad1.left_stick_y * speedMultiplier;
+            double x = -gamepad1.left_stick_x * speedMultiplier;
+            double rx = -gamepad1.right_stick_x * speedMultiplier;
+
+            // Rotate the movement vector counter to the robot's heading for Field-Centric drive
+            double rotationAngle = -botHeading;
+            double rotatedX = y * Math.cos(rotationAngle) - x * Math.sin(rotationAngle);
+            double rotatedY = y * Math.sin(rotationAngle) + x * Math.cos(rotationAngle);
+
             drive.setDrivePowers(new PoseVelocity2d(
-                    new Vector2d(
-                            -gamepad1.left_stick_y * speedMultiplier,
-                            -gamepad1.left_stick_x * speedMultiplier
-                    ),
-                    -gamepad1.right_stick_x * speedMultiplier
+                    new Vector2d(rotatedX, rotatedY),
+                    rx
             ));
 
-            if (gamepad2.a){
-                arm.setPower(-0.75);
+            // Telemetry feedback from Pinpoint Computer
+            if (drive.localizer instanceof PinpointLocalizer) {
+                telemetry.addData("Pinpoint Status", ((PinpointLocalizer) drive.localizer).driver.getDeviceStatus());
             }
-            else if (gamepad2.x){
-                arm.setPower(0.55);
-            }
-            else {
-                arm.setPower(0);
-            }
-
-            if (gamepad2.dpad_up){
-                intake_0.setPosition(0.7);
-                intake_1.setPosition(0.3);
-            }
-             if (gamepad2.dpad_right){
-                intake_0.setPosition(0.6);
-                intake_1.setPosition(0.4);
-            }
-             if (gamepad2.dpad_down){
-                intake_0.setPosition(0.3);
-                intake_1.setPosition(0.7);
-            }
-
-
-
-
-
-            // CRITICAL: Update the localizer's position estimate in every loop
-
-
-            Pose2d currentPose = drive.localizer.getPose();
-
-            // Optional: Telemetry
-            telemetry.addData("x", currentPose.position.x);
-            telemetry.addData("y", currentPose.position.y);
-
-            // Convert radians to degrees for easier reading
-            telemetry.addData("heading (deg)", Math.toDegrees(currentPose.heading.toDouble()));
+            telemetry.addData("X Position", "%.2f in", currentPose.position.x);
+            telemetry.addData("Y Position", "%.2f in", currentPose.position.y);
+            telemetry.addData("Heading (deg)", "%.2f deg", Math.toDegrees(botHeading));
 
             telemetry.update();
         }

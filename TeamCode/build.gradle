@@ -32,6 +32,8 @@ repositories {
 
 dependencies {
     implementation project(':FtcRobotController')
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation fileTree(dir: '../libs', include: ['*.jar', '*.aar'])
 
     implementation "com.acmerobotics.roadrunner:ftc:0.1.25"
     implementation "com.acmerobotics.roadrunner:core:1.0.1"

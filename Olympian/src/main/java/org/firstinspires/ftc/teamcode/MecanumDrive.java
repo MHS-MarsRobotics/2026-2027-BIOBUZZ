@@ -226,7 +226,7 @@ public final class  MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class,     "Motor Front Right");
         leftBack = hardwareMap.get(DcMotorEx.class,    "Motor Back Left"  );
         rightBack = hardwareMap.get(DcMotorEx.class,   "Motor Back Right" );
-        DcMotor arm = hardwareMap.dcMotor.get("arm");
+        //DcMotor arm = hardwareMap.dcMotor.get("arm");
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -235,6 +235,7 @@ public final class  MecanumDrive {
 
            leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
            leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+           rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         lazyImu = new LazyHardwareMapImu(hardwareMap, "imu", new RevHubOrientationOnRobot(

@@ -22,6 +22,7 @@ public class OlympRobotCentricDrive extends LinearOpMode {
 
         Motor_Back_Left.setDirection(DcMotor.Direction.REVERSE);
         Motor_Front_Left.setDirection(DcMotor.Direction.REVERSE);
+        Motor_Back_Right.setDirection(DcMotor.Direction.REVERSE);
 
         Motor_Front_Left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motor_Back_Left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
