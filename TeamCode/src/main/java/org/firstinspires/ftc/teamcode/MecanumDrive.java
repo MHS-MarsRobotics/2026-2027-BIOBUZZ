@@ -55,17 +55,22 @@ import java.util.List;
 public final class MecanumDrive {
     public static class Params {
 
+        //  TO-DO: Tune these parameters
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.UP;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
         // drive model parameters
+        //  TO-DO: Tune these parameters
+
         public double inPerTick = 0.023194008214544;
         public double lateralInPerTick = 0.03388633956;
         public double trackWidthTicks = 1060.9169193936914;
 
         // feedforward parameters (in tick units)
+        //  TO-DO: Tune these parameters
+
         public double kS = 1.6685492128350408;
         public double kV =  0.003912301803128238;
         public double kA = 0.000275;

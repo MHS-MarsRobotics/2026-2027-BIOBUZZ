@@ -88,7 +88,7 @@ public class OlympRobotCentricDrive extends LinearOpMode {
             }
             lastYPressed = gamepad2.y;
 
-            if (flywheelActive) flywheel.setPower(.5);
+            if (flywheelActive) flywheel.setPower(.48);
             else flywheel.setPower(0);
 
            if (gamepad2.a) {
