@@ -19,6 +19,7 @@ public class OlympRobotCentricDrive extends LinearOpMode {
         DcMotor flywheel = hardwareMap.dcMotor.get("flywheel");
         DcMotor intake = hardwareMap.dcMotor.get("intake");
         CRServo feeder = hardwareMap.crservo.get("feeder");
+        CRServo corner_SR = hardwareMap.crservo.get("flower");
 
         Motor_Back_Left.setDirection(DcMotor.Direction.REVERSE);
         Motor_Front_Left.setDirection(DcMotor.Direction.REVERSE);
@@ -95,6 +96,12 @@ public class OlympRobotCentricDrive extends LinearOpMode {
                 feeder.setPower(1);
             } else {
                 feeder.setPower(0);
+            }
+
+            if (gamepad2.x) {
+                corner_SR.setPower(1);
+            } else {
+                corner_SR.setPower(0);
             }
         }
 

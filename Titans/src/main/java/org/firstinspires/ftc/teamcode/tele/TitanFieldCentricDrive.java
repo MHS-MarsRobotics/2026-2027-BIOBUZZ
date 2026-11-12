@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -20,7 +21,7 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
         DcMotor intake = hardwareMap.dcMotor.get("intake");
-        DcMotor flywheel = hardwareMap.dcMotor.get("flywheel");
+        DcMotorEx flywheel = (DcMotorEx) hardwareMap.dcMotor.get("flywheel");
         CRServo feederL = hardwareMap.crservo.get("feederL");
         CRServo feederR = hardwareMap.crservo.get("feederR");
 
@@ -106,14 +107,15 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
             else intake.setPower(0);
 
 
-
-            if (gamepad2.a && !lastAPressed) {
+            /*if (gamepad2.a && !lastAPressed) {
                 flywheelActive = !flywheelActive;
             }
             lastAPressed = gamepad2.a;
 
             if (flywheelActive) flywheel.setPower(.5);
             else flywheel.setPower(0);
+
+             */
 
 
 
@@ -129,6 +131,12 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
             if (feederRActive) feederR.setPower(-1);
             else feederR.setPower(0);
 
+
+            if (gamepad2.b) {
+                flywheel.setVelocity(100);
+            } else {
+                flywheel.setVelocity(0);
+            }
         }
     }
 

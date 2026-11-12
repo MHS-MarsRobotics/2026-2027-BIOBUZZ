@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -22,7 +23,7 @@ public class Main_FieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        DcMotor Launcher  = hardwareMap.dcMotor.get("launch");
+        DcMotorEx flywheel  = (DcMotorEx) hardwareMap.dcMotor.get("flywheel");
 
 
         Motor_Back_Left.setDirection(DcMotor.Direction.REVERSE);
@@ -87,16 +88,12 @@ public class Main_FieldCentricDrive extends LinearOpMode {
      //           Cylinder.setPower(-1);
      //       }
 
+            if (gamepad2.b) {
+                flywheel.setVelocity(100);
+            } else {
+                flywheel.setVelocity(0);
+            }
 
-            if (gamepad2.right_trigger > 0.5){
-                Launcher.setPower(1);
-            }
-            else if (gamepad2.left_trigger > 0.5){
-                Launcher.setPower(-1);
-            }
-            else {
-                Launcher.setPower(0);
-            }
 
             Pose2d currentPose = drive.localizer.getPose();
 

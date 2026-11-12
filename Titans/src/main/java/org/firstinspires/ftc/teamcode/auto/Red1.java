@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "RedFar", group = "Autonomous")
-public class RedFarUPDATED extends LinearOpMode {
+@Autonomous(name = "Red1", group = "Autonomous")
+public class Red1 extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;

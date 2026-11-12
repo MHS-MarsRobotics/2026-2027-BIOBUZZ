@@ -54,7 +54,7 @@ public class TitanMeepMeep {
      //Titan Far launch bot
 
         //Initialize Bot to blue goal
-        RoadRunnerBotEntity TitanToBlueGoal = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity Titan1ToBlueGoal = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14,15)
@@ -73,8 +73,14 @@ public class TitanMeepMeep {
                 .setDimensions(14,15)
                 .build();
 
+        RoadRunnerBotEntity Titan3ToRedGoal = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setDimensions(14,15)
+                .build();
+
         // Drive to Blue Goal
-        TitanToBlueGoal.runAction(TitanToBlueGoal.getDrive().actionBuilder(new Pose2d(-50, -50, Math.toRadians(229)))
+        Titan1ToBlueGoal.runAction(Titan1ToBlueGoal.getDrive().actionBuilder(new Pose2d(-50, -50, Math.toRadians(229)))
                 .waitSeconds(2)
                 .strafeTo(new Vector2d(-20,-20))
                 .waitSeconds(1)
@@ -82,25 +88,28 @@ public class TitanMeepMeep {
                 .build());
 
         Titan1ToRedGoal.runAction(Titan1ToRedGoal.getDrive().actionBuilder(new Pose2d(63, -35, Math.toRadians(180)))
-                .waitSeconds(1)
                 .strafeTo(new Vector2d(35,-12))
                 .waitSeconds(1)
                 .turnTo(Math.toRadians(270))
-                .waitSeconds(1)
                 .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
-                .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(-35,-63),Math.toRadians(90))
                 .build());
 
         Titan2ToRedGoal.runAction(Titan2ToRedGoal.getDrive().actionBuilder(new Pose2d(-63, -35, Math.toRadians(0)))
-                .waitSeconds(1)
                 .strafeTo(new Vector2d(35,-35))
+                .strafeTo(new Vector2d(35,-12))
+                .turnTo(Math.toRadians(180))
                 .waitSeconds(1)
                 .turnTo(Math.toRadians(270))
-                .waitSeconds(1)
                 .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
-                .waitSeconds(3)
-                .strafeToLinearHeading(new Vector2d(-35,-63),Math.toRadians(90))
+                .build());
+
+        Titan3ToRedGoal.runAction(Titan3ToRedGoal.getDrive().actionBuilder(new Pose2d(11.6, -63, Math.toRadians(90)))
+                .strafeTo(new Vector2d(35,-35))
+                .strafeTo(new Vector2d(35,-12))
+                .turnTo(Math.toRadians(180))
+                .waitSeconds(1)
+                .turnTo(Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
                 .build());
 
         Image bgImage = null;
@@ -130,10 +139,11 @@ public class TitanMeepMeep {
         }
 
         meepMeep.setDarkMode(true)
-             //   .setBackgroundAlpha(0.95f)
-             //   .addEntity(TitanToBlueGoal)
+             // .setBackgroundAlpha(0.95f)
+             // .addEntity(Titan1ToBlueGoal)
                 .addEntity(Titan1ToRedGoal)
                 .addEntity(Titan2ToRedGoal)
+                .addEntity(Titan3ToRedGoal)
              // .addEntity(myBotToBlueGoal)
              // .addEntity(myBotToRedGoal)
                 .start();
