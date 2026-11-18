@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.tele;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
+@Disabled
 @TeleOp(name="Titan Testing Field Drive")
 public class  TitanTestingFieldCentricDrive extends LinearOpMode {
     @Override
@@ -20,10 +21,10 @@ public class  TitanTestingFieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        //DcMotor intake = hardwareMap.dcMotor.get("intake");
-        //   DcMotorEx flywheel = (DcMotorEx) hardwareMap.dcMotor.get("flywheel");
-        //CRServo feederL = hardwareMap.crservo.get("feederL");
-        //CRServo feederR = hardwareMap.crservo.get("feederR");
+        DcMotor intake = hardwareMap.dcMotor.get("intake");
+           DcMotorEx flywheel = (DcMotorEx) hardwareMap.dcMotor.get("flywheel");
+        CRServo feederL = hardwareMap.crservo.get("feederL");
+        CRServo feederR = hardwareMap.crservo.get("feederR");
 
 
 
@@ -98,7 +99,7 @@ public class  TitanTestingFieldCentricDrive extends LinearOpMode {
 
 
 
-            /*if (gamepad1.b && !lastBPressed) {
+            if (gamepad1.b && !lastBPressed) {
                 intakeActive = !intakeActive;
             }
             lastBPressed = gamepad1.b;
@@ -136,7 +137,7 @@ public class  TitanTestingFieldCentricDrive extends LinearOpMode {
                 flywheel.setVelocity(100);
             } else {
                 flywheel.setVelocity(0);
-            } */
+            }
         }
     }
 

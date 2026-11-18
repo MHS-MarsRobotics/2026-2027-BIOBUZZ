@@ -43,6 +43,7 @@ public class OlympRobotCentricDrive extends LinearOpMode {
         boolean lastYPressed = false;
 
         boolean intakeActive = false;
+        boolean intake2Active = false;
         boolean lastBPressed = false;
 
         waitForStart();

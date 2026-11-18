@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -19,8 +20,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "RedFar", group = "Autonomous")
-public class RedFar extends LinearOpMode {
+@Disabled
+
+@Autonomous(name = "dealyRedGoal", group = "Autonomous")
+public class dealyRedGoal extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
@@ -54,20 +57,21 @@ public class RedFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 61.3,14.4, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( -63.2116,63.9509, Math.toRadians(131));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
-        int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(-65, 53), Math.toRadians(127.29));
+                .waitSeconds(10)
+                .strafeTo(new Vector2d(-53,54));
 
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-90,8),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-70,5),Math.toRadians(90))
                 .build();
+
 
         waitForStart();
 

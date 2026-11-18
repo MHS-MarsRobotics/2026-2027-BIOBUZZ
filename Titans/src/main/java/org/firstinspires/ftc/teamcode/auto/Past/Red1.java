@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,15 +19,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+@Disabled
+
 @Config
-@Autonomous(name = "delayRedFar", group = "Autonomous")
-public class delayRedFar extends LinearOpMode {
+@Autonomous(name = "Red1", group = "Autonomous")
+public class Red1 extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "arm");
+            arm = hardwareMap.get(DcMotorEx.class, "launch");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -37,12 +40,12 @@ public class delayRedFar extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(1500);
+                    sleep(3000);
                     arm.setPower(0);
                     initialized = true;
                 }
 
-                return false;
+                return arm.isBusy();
             }
         }
 
@@ -54,7 +57,7 @@ public class delayRedFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 61.3,14.4, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( 63,12, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
@@ -62,12 +65,11 @@ public class delayRedFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .waitSeconds(10)
-                .splineTo(new Vector2d(-65, 53), Math.toRadians(127.29));
-
+                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
+                .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-90,8),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build();
 
         waitForStart();

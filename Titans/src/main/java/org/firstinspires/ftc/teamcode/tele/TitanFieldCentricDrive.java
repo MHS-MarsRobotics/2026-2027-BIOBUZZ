@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.tele;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+@Disabled
 @TeleOp(name="Titan Field Drive")
 public class  TitanFieldCentricDrive extends LinearOpMode {
     @Override
@@ -24,8 +26,6 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
         DcMotorEx flywheel = (DcMotorEx) hardwareMap.dcMotor.get("flywheel");
         CRServo feederL = hardwareMap.crservo.get("feederL");
         CRServo feederR = hardwareMap.crservo.get("feederR");
-
-
 
 
 
@@ -107,7 +107,7 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
             else intake.setPower(0);
 
 
-            /*if (gamepad2.a && !lastAPressed) {
+            if (gamepad2.a && !lastAPressed) {
                 flywheelActive = !flywheelActive;
             }
             lastAPressed = gamepad2.a;
@@ -115,7 +115,6 @@ public class  TitanFieldCentricDrive extends LinearOpMode {
             if (flywheelActive) flywheel.setPower(.5);
             else flywheel.setPower(0);
 
-             */
 
 
 

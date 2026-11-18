@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
@@ -15,20 +14,23 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-@Disabled
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 @Config
-@Autonomous(name = "RedFar", group = "Autonomous")
-public class RedFar extends LinearOpMode {
+@Disabled
+@Autonomous(name = "BlueFar", group = "Autonomous")
+public class BlueFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
 
+
+
+
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "launch");
+            arm = hardwareMap.get(DcMotorEx.class, "arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -44,7 +46,7 @@ public class RedFar extends LinearOpMode {
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -56,7 +58,7 @@ public class RedFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 63,12, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( 61.3,-14.4, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
@@ -64,11 +66,11 @@ public class RedFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
-                .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
+                .splineTo(new Vector2d(-65, -53), Math.toRadians(225));
+
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-90,-8),Math.toRadians(270))
                 .build();
 
         waitForStart();

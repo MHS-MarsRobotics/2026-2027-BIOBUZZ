@@ -8,17 +8,30 @@ import com.acmerobotics.roadrunner.Vector2d;
 // Imports for FTC SDK
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 // Import your own MecanumDrive class
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.PinpointLocalizer;
 
-@TeleOp(name = "new odo comp Field Drive ")
+@TeleOp(name = "Main Drive ")
 public class FieldCentricDrivePinpoint extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the MecanumDrive class, which handles hardware setup and PinpointLocalizer
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+        DcMotor flywheel = hardwareMap.dcMotor.get("flywheel");
+        DcMotor intake = hardwareMap.dcMotor.get("intake");
+        CRServo feeder = hardwareMap.crservo.get("feeder");
+        CRServo feeder2 = hardwareMap.crservo.get("feeder2");
+        CRServo corner_SR = hardwareMap.crservo.get("flower");
+
+        boolean flywheelActive = false;
+        boolean lastYPressed = false;
+
+        boolean intakeActive = false;
+        boolean lastBPressed = false;
 
         waitForStart();
 
@@ -72,6 +85,38 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
             telemetry.addData("Heading (deg)", "%.2f deg", Math.toDegrees(botHeading));
 
             telemetry.update();
+
+
+            if (gamepad2.b && !lastBPressed) {
+                intakeActive = !intakeActive;
+            }
+            lastBPressed = gamepad2.b;
+
+            if (intakeActive) intake.setPower(1);
+            else intake.setPower(0);
+
+
+            if (gamepad2.y && !lastYPressed) {
+                flywheelActive = !flywheelActive;
+            }
+            lastYPressed = gamepad2.y;
+
+            if (flywheelActive) flywheel.setPower(.48);
+            else flywheel.setPower(0);
+
+            if (gamepad2.a) {
+                feeder.setPower(1);
+                feeder2.setPower(1);
+            } else {
+                feeder.setPower(0);
+                feeder2.setPower(0);
+            }
+
+            if (gamepad2.x) {
+                corner_SR.setPower(1);
+            } else {
+                corner_SR.setPower(0);
+            }
         }
     }
 }

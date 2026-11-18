@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -19,14 +20,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "Red1", group = "Autonomous")
-public class Red1 extends LinearOpMode {
+@Disabled
+
+@Autonomous(name = "delayBlueGoal", group = "Autonomous")
+public class delayBlueGoal extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "launch");
+            arm = hardwareMap.get(DcMotorEx.class, "arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -37,12 +40,12 @@ public class Red1 extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(3000);
+                    sleep(1500);
                     arm.setPower(0);
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -54,19 +57,19 @@ public class Red1 extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 63,12, Math.toRadians(0));
+        Pose2d initialPose = new Pose2d( -56.8285,-64.0119, Math.toRadians(236));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
-        int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
-                .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
+                .waitSeconds(10)
+                .strafeTo(new Vector2d(-51,-58));
+
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(-70,-5),Math.toRadians(270))
                 .build();
 
         waitForStart();
@@ -80,7 +83,10 @@ public class Red1 extends LinearOpMode {
                         tab1.build(),
                         arm.Armdown(),
                         tab2
+
                 )
         );
+
+
     }
 }

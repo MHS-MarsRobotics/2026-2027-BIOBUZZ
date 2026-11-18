@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -19,16 +19,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-@Disabled
 @Config
-@Autonomous(name = "BlueFar", group = "Autonomous")
-public class BlueFar extends LinearOpMode {
+@Disabled
+
+@Autonomous(name = "RedGoal", group = "Autonomous")
+public class RedGoal extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "launch");
+            arm = hardwareMap.get(DcMotorEx.class, "arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -44,7 +45,7 @@ public class BlueFar extends LinearOpMode {
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -56,24 +57,20 @@ public class BlueFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 61.3,-14.4, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( -63.2116,63.9509, Math.toRadians(131));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
-        int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(47,-12),Math.toRadians(-180))
-                .splineTo(new Vector2d(-24, -24 ), Math.toRadians(225));
+                .strafeTo(new Vector2d(-53,54));
 
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
-
-                
-                .waitSeconds(3)
+                .strafeToLinearHeading(new Vector2d(-70,5),Math.toRadians(90))
                 .build();
+
 
         waitForStart();
 
@@ -88,6 +85,5 @@ public class BlueFar extends LinearOpMode {
                         tab2
                 )
         );
-
     }
 }

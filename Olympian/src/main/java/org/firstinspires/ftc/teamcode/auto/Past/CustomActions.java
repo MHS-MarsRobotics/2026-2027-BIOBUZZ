@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import static android.os.SystemClock.sleep;
 
@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 // It's good practice to have a central class for all your custom actions
+@Disabled
+
 public class CustomActions {
 
     public static Action moveMotorToPosition(DcMotor motor, int targetPosition, double power) {

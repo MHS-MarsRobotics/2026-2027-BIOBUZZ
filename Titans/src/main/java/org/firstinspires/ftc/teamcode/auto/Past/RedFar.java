@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,9 +19,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+@Disabled
 @Config
-@Autonomous(name = "BlueFar", group = "Autonomous")
-public class BlueFarUPDATED extends LinearOpMode {
+@Autonomous(name = "RedFar", group = "Autonomous")
+public class RedFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
@@ -37,7 +39,7 @@ public class BlueFarUPDATED extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(3000);
+                    sleep(1500);
                     arm.setPower(0);
                     initialized = true;
                 }
@@ -54,7 +56,7 @@ public class BlueFarUPDATED extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 61.3,-14.4, Math.toRadians(0));
+        Pose2d initialPose = new Pose2d( 63,12, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
@@ -62,14 +64,11 @@ public class BlueFarUPDATED extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(27,5),Math.toRadians(232));
-
+                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
+                .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(63.4,-34),Math.toRadians(270))
-
-                
-                .waitSeconds(3)
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build();
 
         waitForStart();
@@ -85,6 +84,5 @@ public class BlueFarUPDATED extends LinearOpMode {
                         tab2
                 )
         );
-
     }
 }

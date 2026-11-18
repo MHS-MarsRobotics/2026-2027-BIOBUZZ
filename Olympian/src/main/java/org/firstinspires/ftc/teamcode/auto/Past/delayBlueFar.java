@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
@@ -10,16 +11,19 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.MecanumDrive;
+
 @Config
-@Autonomous(name = "BlueFar", group = "Autonomous")
-public class BlueFar extends LinearOpMode {
+@Disabled
+
+@Autonomous(name = "delayBlueFar", group = "Autonomous")
+public class delayBlueFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
@@ -64,6 +68,7 @@ public class BlueFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
+                .waitSeconds(10)
                 .splineTo(new Vector2d(-65, -53), Math.toRadians(225));
 
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.Past;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,15 +19,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+@Disabled
 @Config
-@Autonomous(name = "dealyRedGoal", group = "Autonomous")
-public class dealyRedGoal extends LinearOpMode {
+@Autonomous(name = "BlueFar", group = "Autonomous")
+public class BlueFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "arm");
+            arm = hardwareMap.get(DcMotorEx.class, "launch");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -42,7 +44,7 @@ public class dealyRedGoal extends LinearOpMode {
                     initialized = true;
                 }
 
-                return false;
+                return arm.isBusy();
             }
         }
 
@@ -54,21 +56,24 @@ public class dealyRedGoal extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( -63.2116,63.9509, Math.toRadians(131));
+        Pose2d initialPose = new Pose2d( 61.3,-14.4, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
+        int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .waitSeconds(10)
-                .strafeTo(new Vector2d(-53,54));
+                .strafeToLinearHeading(new Vector2d(47,-12),Math.toRadians(-180))
+                .splineTo(new Vector2d(-24, -24 ), Math.toRadians(225));
 
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-70,5),Math.toRadians(90))
-                .build();
+                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
 
+                
+                .waitSeconds(3)
+                .build();
 
         waitForStart();
 
@@ -83,5 +88,6 @@ public class dealyRedGoal extends LinearOpMode {
                         tab2
                 )
         );
+
     }
 }

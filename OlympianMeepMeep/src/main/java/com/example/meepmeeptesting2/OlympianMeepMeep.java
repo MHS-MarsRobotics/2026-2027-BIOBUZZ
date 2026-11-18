@@ -23,7 +23,7 @@ public class OlympianMeepMeep {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        RoadRunnerBotEntity REDFAR = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity BLUESIDE = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14,15)
@@ -49,6 +49,13 @@ public class OlympianMeepMeep {
                 .setColorScheme(new ColorSchemeBlueDark())
                 .build();
 
+        BLUESIDE.runAction(BLUESIDE.getDrive().actionBuilder(new Pose2d(-63, 23.3, Math.toRadians(0)))
+                .waitSeconds(1)
+                .strafeToLinearHeading(new Vector2d(-46.6,11.6),Math.toRadians(0))
+                .build());
+
+        /*
+
         REDFAR.runAction(REDFAR.getDrive().actionBuilder(new Pose2d(61.3, 14.4, Math.toRadians(180)))
                 .splineTo(new Vector2d(-47, 49), Math.toRadians(185))
                 .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90))
@@ -73,7 +80,9 @@ public class OlympianMeepMeep {
         BLUEGOAL.runAction(BLUEGOAL.getDrive().actionBuilder(new Pose2d( -50, -50,Math.toRadians(225)))
                 .strafeTo(new Vector2d(-47,-49))
                 .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
-                .build());
+                .build());\
+
+       */
 
 
 
@@ -99,7 +108,7 @@ public class OlympianMeepMeep {
 
         meepMeep.setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(REDFAR)
+                .addEntity(BLUESIDE)
                 .addEntity(REDGOAL)
                 .addEntity(BLUEFAR)
                 .addEntity(BLUEGOAL)
