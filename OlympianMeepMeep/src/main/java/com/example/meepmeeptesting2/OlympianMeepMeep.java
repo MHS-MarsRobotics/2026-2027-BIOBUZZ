@@ -49,9 +49,11 @@ public class OlympianMeepMeep {
                 .setColorScheme(new ColorSchemeBlueDark())
                 .build();
 
-        BLUESIDE.runAction(BLUESIDE.getDrive().actionBuilder(new Pose2d(-63, 23.3, Math.toRadians(0)))
+        BLUESIDE.runAction(BLUESIDE.getDrive().actionBuilder(new Pose2d(-63, 11.6, Math.toRadians(0)))
                 .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-46.6,11.6),Math.toRadians(0))
+                .turnTo(Math.toRadians(90))
+                .splineTo(new Vector2d(0, 34.3), Math.toRadians(0))
+                .splineTo(new Vector2d(40, 63), Math.toRadians(90))
                 .build());
 
         /*
