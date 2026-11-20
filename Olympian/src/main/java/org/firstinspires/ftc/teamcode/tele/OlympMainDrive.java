@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.PinpointLocalizer;
 
 @TeleOp(name = "Main Drive ")
-public class FieldCentricDrivePinpoint extends LinearOpMode {
+public class OlympMainDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize the MecanumDrive class, which handles hardware setup and PinpointLocalizer

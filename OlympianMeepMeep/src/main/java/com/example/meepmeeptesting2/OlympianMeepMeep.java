@@ -23,68 +23,29 @@ public class OlympianMeepMeep {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        RoadRunnerBotEntity BLUESIDE = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity UPSIDE = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14,15)
                 .build();
 
-        RoadRunnerBotEntity REDGOAL = new DefaultBotBuilder(meepMeep)
+        RoadRunnerBotEntity DOWNSIDE = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14,15)
                 .build();
 
-        RoadRunnerBotEntity BLUEFAR = new DefaultBotBuilder(meepMeep)
-                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14,15)
-                .setColorScheme(new ColorSchemeBlueDark())
-                .build();
 
-        RoadRunnerBotEntity BLUEGOAL = new DefaultBotBuilder(meepMeep)
-                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14,15)
-                .setColorScheme(new ColorSchemeBlueDark())
-                .build();
-
-        BLUESIDE.runAction(BLUESIDE.getDrive().actionBuilder(new Pose2d(-63, 11.6, Math.toRadians(0)))
-                .waitSeconds(1)
+        UPSIDE.runAction(UPSIDE.getDrive().actionBuilder(new Pose2d(-63, 11.6, Math.toRadians(0)))
+                .strafeTo(new Vector2d(-59,11.6))
                 .turnTo(Math.toRadians(90))
-                .splineTo(new Vector2d(0, 34.3), Math.toRadians(0))
-                .splineTo(new Vector2d(40, 63), Math.toRadians(90))
+                .splineTo(new Vector2d(0, 40), Math.toRadians(0))
+                .splineTo(new Vector2d(36, 63), Math.toRadians(90))
                 .build());
 
-        /*
-
-        REDFAR.runAction(REDFAR.getDrive().actionBuilder(new Pose2d(61.3, 14.4, Math.toRadians(180)))
-                .splineTo(new Vector2d(-47, 49), Math.toRadians(185))
-                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90))
+        DOWNSIDE.runAction(DOWNSIDE.getDrive().actionBuilder(new Pose2d(63, 63, Math.toRadians(0)))
+                .strafeTo(new Vector2d(50,63))
                 .build());
-
-
-
-        REDGOAL.runAction(REDGOAL.getDrive().actionBuilder(new Pose2d( -50, 50,Math.toRadians(135)))
-                .strafeTo(new Vector2d(-47,49))
-                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90))
-                .build());
-
-
-
-        BLUEFAR.runAction(BLUEFAR.getDrive().actionBuilder(new Pose2d(61.3, -14.4, Math.toRadians(180)))
-                .splineTo(new Vector2d(-47, -49), Math.toRadians(225))
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
-                .build());
-
-
-
-        BLUEGOAL.runAction(BLUEGOAL.getDrive().actionBuilder(new Pose2d( -50, -50,Math.toRadians(225)))
-                .strafeTo(new Vector2d(-47,-49))
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
-                .build());\
-
-       */
 
 
 
@@ -110,10 +71,8 @@ public class OlympianMeepMeep {
 
         meepMeep.setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(BLUESIDE)
-                .addEntity(REDGOAL)
-                .addEntity(BLUEFAR)
-                .addEntity(BLUEGOAL)
+                .addEntity(UPSIDE)
+                .addEntity(DOWNSIDE)
                 .start();
 
 

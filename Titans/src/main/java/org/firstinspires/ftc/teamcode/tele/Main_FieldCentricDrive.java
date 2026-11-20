@@ -22,11 +22,21 @@ public class Main_FieldCentricDrive extends LinearOpMode {
         CRServo feederL = hardwareMap.crservo.get("feederL");
         CRServo feederR = hardwareMap.crservo.get("feederR");
 
+        //boolean revflywheelActive = false;
+        //boolean lastDDownPressed = false;
+
         boolean flywheelActive = false;
         boolean lastAPressed = false;
 
+        //boolean revintakeActive = false;
+        //boolean lastDLeftPressed = false;
+
         boolean intakeActive = false;
         boolean lastBPressed = false;
+
+        //boolean revfeederLActive = false;
+        //boolean revfeederRActive = false;
+        //boolean lastDRightPressed = false;
 
         boolean feederLActive = false;
         boolean feederRActive = false;
@@ -75,7 +85,9 @@ public class Main_FieldCentricDrive extends LinearOpMode {
                             driveVector,
                             rx
                     )
-            );
+             );
+
+            double dirMultiplier = gamepad2.dpad_down ? -1.0 : 1.0;
 
             // Toggle Intake Control (Gamepad 2 B)
             if (gamepad2.b && !lastBPressed) {
@@ -83,8 +95,9 @@ public class Main_FieldCentricDrive extends LinearOpMode {
             }
             lastBPressed = gamepad2.b;
 
+
             if (intakeActive) {
-                intake.setPower(-1.0);
+                intake.setPower(dirMultiplier);
             } else {
                 intake.setPower(0);
             }
@@ -95,8 +108,9 @@ public class Main_FieldCentricDrive extends LinearOpMode {
             }
             lastAPressed = gamepad2.a;
 
+
             if (flywheelActive) {
-                flywheel.setPower(0.5);
+                flywheel.setPower(0.55 * dirMultiplier);
             } else {
                 flywheel.setPower(0);
             }
@@ -108,14 +122,15 @@ public class Main_FieldCentricDrive extends LinearOpMode {
             }
             lastXPressed = gamepad2.x;
 
+
             if (feederLActive) {
-                feederL.setPower(-1.0);
+                feederL.setPower(-dirMultiplier);
             } else {
                 feederL.setPower(0);
             }
 
             if (feederRActive) {
-                feederR.setPower(1.0);
+                feederR.setPower(dirMultiplier);
             } else {
                 feederR.setPower(0);
             }

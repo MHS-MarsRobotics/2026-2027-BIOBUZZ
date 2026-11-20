@@ -91,7 +91,7 @@ public class TitanMeepMeep {
                 .strafeTo(new Vector2d(35,-12))
                 .waitSeconds(1)
                 .turnTo(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-30.5,-63,Math.toRadians(90)),Math.toRadians(270))
                 .build());
 
         Titan2ToRedGoal.runAction(Titan2ToRedGoal.getDrive().actionBuilder(new Pose2d(-63, -35, Math.toRadians(0)))
@@ -100,7 +100,7 @@ public class TitanMeepMeep {
                 .turnTo(Math.toRadians(180))
                 .waitSeconds(1)
                 .turnTo(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-30.5,-63,Math.toRadians(90)),Math.toRadians(270))
                 .build());
 
         Titan3ToRedGoal.runAction(Titan3ToRedGoal.getDrive().actionBuilder(new Pose2d(11.6, -63, Math.toRadians(90)))
@@ -109,7 +109,7 @@ public class TitanMeepMeep {
                 .turnTo(Math.toRadians(180))
                 .waitSeconds(1)
                 .turnTo(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(-35,-63,Math.toRadians(90)),Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-30.5,-63,Math.toRadians(90)),Math.toRadians(270))
                 .build());
 
         Image bgImage = null;
